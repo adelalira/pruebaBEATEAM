@@ -1,0 +1,208 @@
+/*COLORES ESTADO*/
+.grisColor {
+    background-color: rgb(163, 161, 161);
+    width:100px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin:auto;
+}
+
+.amarilloColor {
+    background-color: rgba(240, 221, 52, 0.808);
+    width:100px;
+    text-align: center;
+    border-radius: 5px;
+    margin:auto;
+}
+
+.azulColor {
+    background-color: rgba(48, 48, 224, 0.993);
+    width:140px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin:auto;
+}
+
+.verdeColor {
+    background-color: green;
+    width:100px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin:auto;
+}
+
+
+/*BADGE*/
+.badge{
+    border-radius: 1rem !important;
+    justify-content: center;
+    display: flex;
+    width: 20px;
+}
+
+.badgeConComentario{
+    color:black;
+    background-color: yellow;
+}
+.badgeSinComentario{
+    color:white;
+    background-color: blue;
+}
+
+
+/*TAMAÑO DE LETRA*/
+.tamañoLetraMenor{
+    font-size: 14px;
+    margin-right: 0.2em;
+    margin-left: 0.2em;
+}
+
+/*LOGOS*/
+.logos{
+    width: 100px;
+}
+
+
+/*POPUP BOCADILLO*/
+figure {
+    margin: 0;
+    padding: 0;
+}
+.figcaption {
+    display: none !important;
+    position:absolute;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid white;
+    color:black;
+    padding-top: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+    transition: all .5s;
+    border: solid black 1px;
+    border-radius: 2px;
+    margin-top: 3em;
+}
+
+.figure:hover > .figcaption {
+    display:block !important;
+    transition: all .5s;
+  }
+
+.figcaption:after, .figcaption:before {
+    content: "";
+    width: 0;
+    height: 0;
+}
+.figcaption:after {
+    position: relative;
+    border-bottom: 20px solid white;
+    border-right: 18px solid transparent;
+    border-left: 18px solid transparent;
+    
+    left: 0px;
+    top: -106px;
+    z-index:1;
+}
+.figcaption:before {
+    position: relative;
+    border-bottom: 20px solid black;
+    border-right: 18px solid transparent;
+    border-left: 18px solid transparent;
+    margin: -30px 0 0 40px;
+
+    left: -20px;
+    top: -47px;
+}
+  
+  
+/*FORMULARIO*/
+.formulario{
+    margin-left: 6em;
+}
+
+.tabla{
+    margin-left: 4em;
+}
+
+.card{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+/*BOTÓN BUSCAR*/
+.btncentrado{
+    margin: auto;
+}
+
+.btn{
+    border-color: rgb(44, 121, 215);
+    color: rgb(44, 121, 215);
+    width: 95%;
+}
+
+.lupa{
+    width: 18px;
+}
+
+/*BOTÓN ELIMINAR*/
+.form-control{
+    width: 105%;
+    border-radius: 0px !important;
+}
+
+.x{
+    height: 37px;
+    width:35px;
+    color:red;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.btnfecha{
+    margin-top: 23px;
+}
+
+.btnTipos{
+    margin-top: 28px;
+}
+
+.selectTipos{
+    width: 105%;
+    height: 35px;
+}
+
+/*CUADRADOS TIPOS*/
+.cuadradoVerde{
+    background-color: green;
+    width:20px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin-right: 1em;
+}
+
+.cuadradoAzul{
+    background-color: rgba(48, 48, 224, 0.993);
+    width:20px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin-right: 1em;
+}
+
+.cuadradoAmarillo{
+    background-color: rgba(240, 221, 52, 0.808);
+    width:20px;
+    text-align: center;
+    border-radius: 5px;
+    color:white;
+    margin-right: 1em;
+}
+
+.limitadorDeTamaño{
+    width: 15%;
+}

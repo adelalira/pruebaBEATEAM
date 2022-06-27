@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*INPUT FECHA*/
+.mat-form-field-type-mat-date-range-input .mat-form-field-infix {
+    width: 50% !important;
+}

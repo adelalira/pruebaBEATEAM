@@ -1,28 +1,161 @@
-<div class="card">
-    <h5>Implicit Pagination</h5>
+<!--CONTENEDOR-->
+<div class="row mt-5">
+  <!--CONTENEDOR FORMULARIO-->
+  <div class="col-2 formulario">
+    <form (ngSubmit)="buscar()"
+          #miFormulario="ngForm"
+          autocomplete="off">
+          <!-- EMAIL -->
+          <div class="mb-3 row">
+              <label class="col-3 col-form-label">Cliente</label><br>
+              <div class="col-10">
+                  <input type="text"
+                        class="form-control marginExtra email"
+                        [(ngModel)]="cliente"
+                        name="cliente"
+                        id="cliente"
+                        placeholder="Cliente">   
+              </div>
+              <div class="col-2">
+                <button class="x" (click)="cliente=''">X</button>
+              </div>
+          </div>
+
+
+        <!-- referencia -->
+        <div class="mb-3 row">
+          <label class="col-sm-3 col-form-label">Referencia</label><br>
+          <div class="col-10">
+              
+              <input type="referencia"
+                    class="form-control marginExtra"
+                    [(ngModel)]="referencia"
+                    name="referencia"
+                    placeholder="Referencia">  
+          </div>
+          <div class="col-2">
+            <button class="x" (click)="referencia=''">X</button>
+          </div>
+      </div>
+
+        <!-- usuario -->
+        <div class="mb-3 row">
+          <label class="col-sm-3 col-form-label">Usuario</label><br>
+          <div class="col-10">
+                <input type="usuario"
+                      class="form-control marginExtra"
+                      [(ngModel)]="usuario"
+                      name="usuario"
+                      placeholder="Usuario">  
+            </div>
+            <div class="col-2">
+              <button class="x " (click)="usuario=''">X</button>
+            </div>
+        </div>
+
+            <!--Fecha-->
+              <div class="mb-3 row ">
+                <div class="col-10">
+                  <label>Fecha</label><br>        
+                  <mat-form-field>
+                    <mat-label>Introduce la fecha</mat-label>
+                    <mat-date-range-input [rangePicker]="picker" class="inputFecha">
+                      <input matStartDate  [(ngModel)]="fechaInicio"  name="fechaInicio" placeholder="Fecha de inicio">
+                      <input matEndDate  [(ngModel)]="fechaFin"  name="fechaFin" placeholder="Fecha de fin">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+                <div class="col-2">
+                  <button class="x btnfecha" (click)="fechaInicio==null && fechaFin == null">X</button>
+                </div>
+            </div>
+
+          <!-- Tipo-->
+                <div class="mb-3 row ">
+                  <div class="col-10">
+                      <label class="mb-2">Tipos</label><br>
+                      <select class="selectTipos">
+                          <option *ngFor="let tipo of tipos" (click)="seleccionarTipoIndividual(tipo)" >{{tipo}} </option>  
+                          <option (click)="seleccionarTodosLosTipos()">TODOS </option>
+                      </select>
+                  </div>
+                  <div class="col-2">
+                    <button class="x btnTipos"  (click)="tipos=[]">X</button>
+                  </div>
+              </div> 
+
+           <div class="mb-3 row">
+              <div class="col-sm-9">
+                <label>Estado</label><br>
+                  <div class="form-check">
+                    <div  *ngFor="let estado of estados">
+                      <input type="checkbox" value="{{estado}}" id="{{estado}}" name="check" (click)="seleccionarEstados(estado)"/> {{estado}}<br/>
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+
+        <!--BOTON PARA BUSCAR-->
+          <div class="row btncentrado">
+              <div class="col-12 text-center">
+                
+                  <button type="submit"
+                          class="custom-btn btn">
+                      <img src="../assets/img/lupa.png" class="lupa">
+                      Buscar
+                  </button>
+              </div>
+          </div>
+    </form>
+  </div>
+
+
+
+
+<!--CONTENEDOR DE LA TABLA-->
+<div class="card col-9 col-md-8 tabla" >
     <p-table [value]="pedidos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Company</th>
-                <th>Representative</th>
+                <th >PRODUCTO</th>
+                <th>Q</th>
+                <th>ESTADO</th>
+                <th>TIPO</th>
+                <th>FECHA</th>
+                <th>CLIENTE</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pedidos>
             <tr>
-                <td>{{pedidos.id}}</td>
-                <td>{{customer.country.name}}</td>
-                <td>{{customer.company}}</td>
-                <td>{{customer.representative.name}}</td>
+                <td> <img class ="logos" src="{{pedidos.logo}}"> {{pedidos.referencia}}</td>
+                <td *ngIf="pedidos.observacion === ''"> 
+                  <span class="badge badgeSinComentario figure">i 
+                    <div class ="figcaption">
+                      <p align="left">Obs. linea: {{pedidos.observacion}}</p>
+                      <p align="left">Pedido por: {{pedidos.usuario}}</p>
+                    </div>
+                  </span> x{{pedidos.cantidad}}
+                </td>
+                <td *ngIf="pedidos.observacion != ''"> 
+                  <span class="badge badgeConComentario figure">!
+                    <div class ="figcaption">
+                      <p align="left">Obs. linea: {{pedidos.observacion}}</p>
+                      <p align="left">Pedido por: {{pedidos.usuario}}</p>
+                    </div>
+                  </span> x{{pedidos.cantidad}}
+                </td>
+                <td><p  class="pt-1 pb-1" [ngClass]="{'amarilloColor': pedidos.estado === 'Recogiendo', 'grisColor': pedidos.estado === 'Pendiente', 'verdeColor': pedidos.estado === 'Entregada', 'azulColor': pedidos.estado === 'Desconsolidada'}">{{pedidos.estado}}</p></td>
+                <td>{{pedidos.tipo}}</td>
+                <td><label>{{pedidos.fecha | date: 'HH:mm'}} </label> <label class="tamañoLetraMenor"> {{pedidos.fecha | date: 'dd-MMM-yyyy'}}</label></td>
+                <td><label *ngIf="pedidos.tipo=='Mesa'" class="cuadradoAzul">M</label><label *ngIf="pedidos.tipo=='Ruta'" class="cuadradoVerde">R</label><label *ngIf="pedidos.tipo=='Urgente'" class="cuadradoAmarillo">U</label><label class="tamañoLetraMenor">{{pedidos.codigo_cliente}}</label><label>{{pedidos.alias_cliente}}</label></td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="paginatorleft">
-            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-        </ng-template>
-        <ng-template pTemplate="paginatorright">
-            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-        </ng-template>
     </p-table>
+    </div>
+
 </div>
+

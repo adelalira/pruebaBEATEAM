@@ -3,7 +3,8 @@ import Swal from 'sweetalert2';
 
 import * as crypto from 'crypto-js';
 import { BEATEAMserviceService } from './servicio/beateam.service';
-import { Pedido } from './interfaces/interfaz';
+import { Estado, Estados, Pedido, Tipo, Tipos } from './interfaces/interfaz';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 
@@ -16,21 +17,37 @@ export class AppComponent implements OnInit{
 
   title = 'pruebaBEATEAM';
 
-  constructor(private servicio: BEATEAMserviceService){}
+  constructor(private servicio: BEATEAMserviceService, private fb:FormBuilder){};
+
 
   ngOnInit(): void {
     this.crearToken();
     this.recogerPedidos();
+    this.recogerEstados();
+    this.recogerTipos();
+
+ 
+
   }
 
   //VARIABLES
+
   pedidos: Pedido[] = [];
+  tipos!: Tipo[];
+  estados!: Estado[];
   token!:string;
+  
 
   first = 0;
   rows = 10;
 
-  datos:boolean=false;
+  cliente: string = "";
+  referencia: string = "";
+  usuario:string = "";
+  fechaInicio!:Date;
+  fechaFin!:Date;
+  tipoSeleccionado:string[]=[];
+  checkboxSeleccionados : string[]=[];
 
 
   /**
@@ -40,19 +57,19 @@ export class AppComponent implements OnInit{
     let partePrivada:string="ADELLIRA";
     let fechaActual = new Date();
     this.token = crypto.SHA384(partePrivada + String(fechaActual.getFullYear()) + String(fechaActual.getMonth() + 1).padStart(2,'0') + String(fechaActual.getDate()).padStart(2,'0') ).toString();
+    console.log(this.token);
   }
 
 
 
   /**
-   * Recoge todos los pedidos de la base de datos
+   * Recoge todos los pedidos de la base de datos.
    */
   recogerPedidos(){
     this.servicio.recogerPedidos(this.token).subscribe({
       next: (resp) => {
-        this.pedidos = resp;
+        this.pedidos = resp.data;
         console.log(this.pedidos)
-        this.datos=true;
       },
       error: (e) => {
         Swal.fire({
@@ -63,14 +80,105 @@ export class AppComponent implements OnInit{
         });
       },
     });
-    
-
  }
 
+/**
+ * Recogemos los tipos con la petición getTipos.
+ */
+ recogerTipos(){
+  this.servicio.recogerTipos(this.token).subscribe({
+    next: (resp) => {
+      this.tipos = resp.data;
+      console.log(this.tipos)
+    },
+    error: (e) => {
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: 'En estos momentos no podemos mostrarle los pedidos, perdone por las molestias.',
+        confirmButtonColor: '##52ab98',
+      });
+    },
+  });
+}
 
+/**
+ * Recogemos los estados con la petición getEstados.
+ */
+recogerEstados(){
+  this.servicio.recogerEstados(this.token).subscribe({
+    next: (resp) => {
+      this.estados = resp.data;
+      console.log(this.estados)
+    },
+    error: (e) => {
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: 'En estos momentos no podemos mostrarle los pedidos, perdone por las molestias.',
+        confirmButtonColor: '##52ab98',
+      });
+    },
+  });
+}
 
+/**
+ * Seleccionamos el tipo deseado si se elige uno.
+ * @param tipo 
+ */
+seleccionarTipoIndividual(tipo:Tipo){
+  this.tipoSeleccionado.push(String(tipo));
+}
+
+/**
+ * Seleccionamos todos los tipos disponibles.
+ */
+seleccionarTodosLosTipos(){
+  this.tipoSeleccionado.push("Ruta");
+  this.tipoSeleccionado.push("Urgente");
+  this.tipoSeleccionado.push("Mesa");
+}
+
+/**
+ * Seleccionamos los estados que queremos buscar, en el caso de que se haga un segundo click se eliminara del array de elementos con los que se hara la busqueda.
+ * @param estado 
+ */
+seleccionarEstados(estado:Estado){
+  let existe:boolean=false;
+ for (let i = 0; i < this.checkboxSeleccionados.length; i++) {
+  if(String(estado)===this.checkboxSeleccionados[i]){
+    this.checkboxSeleccionados.splice(i,1);
+    existe=true;
+  }
+ }
+ if(existe===false){
+  this.checkboxSeleccionados.push(String(estado));
+ }
+}
+
+/**
+ * Busca los pedidos con los parametros introducidos en el formulario.
+ */
+buscar(){
+  this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, this.fechaInicio, this.fechaFin, this.tipoSeleccionado, this.checkboxSeleccionados)
+   .subscribe({
+     next: (resp => {
+      this.pedidos=resp.data;
+    }),
+     error: resp => {
+       Swal.fire({
+         title:'Error',
+         icon: 'error',
+         text:resp.error.mensaje,
+         confirmButtonColor:'#52ab98'
+       });
+     }
+  });
+ }
+
+ 
   /**
-     * Tabla
+     * Metodos propios de primeng necesarios para imprimir la tabla
      */
    next() {
     this.first = this.first + this.rows;
@@ -94,10 +202,4 @@ export class AppComponent implements OnInit{
 
 
 
-  
-
-
-
-
-  
 }
