@@ -66,18 +66,22 @@ export class BEATEAMserviceService {
       console.log(url)
     }
     if(fechaInicio!=null  && contador==1){
-      url = `${url}&inicio=${fechaInicio}`;
+      let fechaInicioFormateada=  String(fechaInicio.getFullYear()) + "-" +  String(fechaInicio.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaInicio.getDate()).padStart(2,'0');
+      url = `${url}&inicio=${fechaInicioFormateada}`;
     } 
     if(fechaInicio!=null && contador==0){
-      url = `${url}?inicio=${fechaInicio}`;
+      let fechaInicioFormateada=  String(fechaInicio.getFullYear()) + "-" + String(fechaInicio.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaInicio.getDate()).padStart(2,'0');
+      url = `${url}?inicio=${fechaInicioFormateada}`;
       contador=1;
       console.log(url)
     }
     if(fechaFin!=null  && contador==1){
-      url = `${url}&fin=${fechaFin}`;
+      let fechaFinFormateada=  String(fechaFin.getFullYear()) + "-" + String(fechaFin.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaFin.getDate()).padStart(2,'0');
+      url = `${url}&fin=${fechaFinFormateada}`;
     } 
     if(fechaFin!=null  && contador==0){
-      url = `${url}?fin=${fechaFin}`;
+      let fechaFinFormateada=  String(fechaFin.getFullYear()) + "-" + String(fechaFin.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaFin.getDate()).padStart(2,'0');
+      url = `${url}?fin=${fechaFinFormateada}`;
       contador=1;
       console.log(url)
     }

@@ -58,14 +58,44 @@
                 <div class="col-10">
                   <label>Fecha</label><br>        
                   <mat-form-field>
+
+                    <mat-label>Enter Session Period</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="From Date" [(ngModel)]="fechaInicio"  name="fechaInicio">
+                      <input matEndDate placeholder="To Date" [(ngModel)]="fechaFin"  name="fechaFin">
+                    </mat-date-range-input>
+                
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                
+                </mat-form-field>
+
+
+
+
+
+
+
+
+
+
+                 <!-- <mat-form-field>
                     <mat-label>Introduce la fecha</mat-label>
+
+                    <mat-date-range-input>
+                      <input matStartDate placeholder="Start date">
+                      <input matEndDate placeholder="End date">
+                  </mat-date-range-input>
+
+
+
                     <mat-date-range-input [rangePicker]="picker" class="inputFecha">
                       <input matStartDate  [(ngModel)]="fechaInicio"  name="fechaInicio" placeholder="Fecha de inicio">
                       <input matEndDate  [(ngModel)]="fechaFin"  name="fechaFin" placeholder="Fecha de fin">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker></mat-date-range-picker>
-                  </mat-form-field>
+                  </mat-form-field>-->
                 </div>
                 <div class="col-2">
                   <button class="x btnfecha" (click)="fechaInicio==null && fechaFin == null">X</button>
@@ -76,9 +106,9 @@
                 <div class="mb-3 row ">
                   <div class="col-10">
                       <label class="mb-2">Tipos</label><br>
-                      <select class="selectTipos">
-                          <option *ngFor="let tipo of tipos" (click)="seleccionarTipoIndividual(tipo)" >{{tipo}} </option>  
-                          <option (click)="seleccionarTodosLosTipos()">TODOS </option>
+                      <select class="selectTipos" (click)="seleccionarTiposIndividualmente()" name="tipoSelect" [(ngModel)]="tipoSeleccionado">
+                        <option *ngFor="let i of tipos"   value="{{i}}"  >{{i}}</option>   
+                        <option value="TODOS">TODOS </option>
                       </select>
                   </div>
                   <div class="col-2">

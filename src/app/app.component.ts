@@ -46,7 +46,8 @@ export class AppComponent implements OnInit{
   usuario:string = "";
   fechaInicio!:Date;
   fechaFin!:Date;
-  tipoSeleccionado:string[]=[];
+  tipoSeleccionado!:string;
+  tiposSeleccionado:string[]=[];
   checkboxSeleccionados : string[]=[];
 
 
@@ -122,22 +123,15 @@ recogerEstados(){
   });
 }
 
-/**
- * Seleccionamos el tipo deseado si se elige uno.
- * @param tipo 
- */
-seleccionarTipoIndividual(tipo:Tipo){
-  this.tipoSeleccionado.push(String(tipo));
+seleccionarTiposIndividualmente(){
+  if(this.tipoSeleccionado=="TODOS"){
+    this.tiposSeleccionado = ["Mesa","Ruta","Urgente"]
+  }
+  else if (this.tipoSeleccionado =="Mesa" || this.tipoSeleccionado =="Urgente" || this.tipoSeleccionado =="Ruta") {
+    this.tiposSeleccionado.push(this.tipoSeleccionado);
+  }
 }
 
-/**
- * Seleccionamos todos los tipos disponibles.
- */
-seleccionarTodosLosTipos(){
-  this.tipoSeleccionado.push("Ruta");
-  this.tipoSeleccionado.push("Urgente");
-  this.tipoSeleccionado.push("Mesa");
-}
 
 /**
  * Seleccionamos los estados que queremos buscar, en el caso de que se haga un segundo click se eliminara del array de elementos con los que se hara la busqueda.
@@ -160,7 +154,8 @@ seleccionarEstados(estado:Estado){
  * Busca los pedidos con los parametros introducidos en el formulario.
  */
 buscar(){
-  this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, this.fechaInicio, this.fechaFin, this.tipoSeleccionado, this.checkboxSeleccionados)
+  console.log( "BUSCAR" + this.tiposSeleccionado)
+  this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, this.fechaInicio, this.fechaFin, this.tiposSeleccionado, this.checkboxSeleccionados)
    .subscribe({
      next: (resp => {
       this.pedidos=resp.data;
