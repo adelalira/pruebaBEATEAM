@@ -63,51 +63,51 @@ export class BEATEAMserviceService {
     if(usuario!=null  && usuario!="" && contador==0){
       url = `${url}?usuario=${usuario}`;
       contador=1;
-      console.log(url)
+     
     }
     if(fechaInicio!=null  && contador==1){
       let fechaInicioFormateada=  String(fechaInicio.getFullYear()) + "-" +  String(fechaInicio.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaInicio.getDate()).padStart(2,'0');
-      url = `${url}&inicio=${fechaInicioFormateada}`;
+      url = `${url}&fecha[inicio]=${fechaInicioFormateada}`;
     } 
     if(fechaInicio!=null && contador==0){
       let fechaInicioFormateada=  String(fechaInicio.getFullYear()) + "-" + String(fechaInicio.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaInicio.getDate()).padStart(2,'0');
-      url = `${url}?inicio=${fechaInicioFormateada}`;
+      url = `${url}?fecha[inicio]=${fechaInicioFormateada}`;
       contador=1;
-      console.log(url)
+     
     }
     if(fechaFin!=null  && contador==1){
       let fechaFinFormateada=  String(fechaFin.getFullYear()) + "-" + String(fechaFin.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaFin.getDate()).padStart(2,'0');
-      url = `${url}&fin=${fechaFinFormateada}`;
+      url = `${url}&fecha[fin]=${fechaFinFormateada}`;
     } 
     if(fechaFin!=null  && contador==0){
       let fechaFinFormateada=  String(fechaFin.getFullYear()) + "-" + String(fechaFin.getMonth() + 1).padStart(2,'0')+ "-" + String(fechaFin.getDate()).padStart(2,'0');
-      url = `${url}?fin=${fechaFinFormateada}`;
+      url = `${url}?fecha[fin]=${fechaFinFormateada}`;
       contador=1;
-      console.log(url)
+     
     }
     for (let i = 0; i < tiposSeleccionados.length; i++) {
       if(tiposSeleccionados[i]!=null  && contador==1){
         url = `${url}&tipo=${tiposSeleccionados[i]}`;
-        console.log(url)
+       
       }
       if(tiposSeleccionados[i]!=null  && contador==0){
         url = `${url}?tipo=${tiposSeleccionados[i]}`;
         contador=1; 
-        console.log(url)
+       
      }
     }
     for (let i = 0; i < checkboxSeleccionados.length; i++) {
       if(checkboxSeleccionados[i]!=null   && contador==1){
         url = `${url}&estado[]=${checkboxSeleccionados[i]}`;
-        console.log(url)
+       
       }
       if(checkboxSeleccionados[i]!=null  && contador==0){
         url = `${url}?estado[]=${checkboxSeleccionados[i]}`;
         contador=1; 
-        console.log(url)
+       
      }
     }
-   
+  
 
     const opcion = new HttpHeaders().set('X-Auth',token).set('funcion','getTareas');
     opcion.append('Content-Type', 'application/json')

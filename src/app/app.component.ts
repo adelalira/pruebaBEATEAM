@@ -58,7 +58,6 @@ export class AppComponent implements OnInit{
     let partePrivada:string="ADELLIRA";
     let fechaActual = new Date();
     this.token = crypto.SHA384(partePrivada + String(fechaActual.getFullYear()) + String(fechaActual.getMonth() + 1).padStart(2,'0') + String(fechaActual.getDate()).padStart(2,'0') ).toString();
-    console.log(this.token);
   }
 
 
@@ -70,7 +69,6 @@ export class AppComponent implements OnInit{
     this.servicio.recogerPedidos(this.token).subscribe({
       next: (resp) => {
         this.pedidos = resp.data;
-        console.log(this.pedidos)
       },
       error: (e) => {
         Swal.fire({
@@ -90,7 +88,6 @@ export class AppComponent implements OnInit{
   this.servicio.recogerTipos(this.token).subscribe({
     next: (resp) => {
       this.tipos = resp.data;
-      console.log(this.tipos)
     },
     error: (e) => {
       Swal.fire({
@@ -110,7 +107,6 @@ recogerEstados(){
   this.servicio.recogerEstados(this.token).subscribe({
     next: (resp) => {
       this.estados = resp.data;
-      console.log(this.estados)
     },
     error: (e) => {
       Swal.fire({
@@ -154,7 +150,6 @@ seleccionarEstados(estado:Estado){
  * Busca los pedidos con los parametros introducidos en el formulario.
  */
 buscar(){
-  console.log( "BUSCAR" + this.tiposSeleccionado)
   this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, this.fechaInicio, this.fechaFin, this.tiposSeleccionado, this.checkboxSeleccionados)
    .subscribe({
      next: (resp => {
