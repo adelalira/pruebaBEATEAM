@@ -5,23 +5,24 @@
     <form (ngSubmit)="buscar()"
           #miFormulario="ngForm"
           autocomplete="off">
-          <!-- EMAIL -->
+
+
+
+          <!-- Cliente -->
           <div class="mb-3 row">
-              <label class="col-3 col-form-label">Cliente</label><br>
-              <div class="col-10">
-                  <input type="text"
-                        class="form-control marginExtra email"
+            <label class="col-sm-3 col-form-label">Cliente</label><br>
+            <div class="col-10">
+                  <input type="cliente"
+                        class="form-control marginExtra"
                         [(ngModel)]="cliente"
                         name="cliente"
-                        id="cliente"
-                        placeholder="Cliente">   
+                        placeholder="Cliente">  
               </div>
-              <div class="col-2">
-                <button class="x" (click)="cliente=''">X</button>
-              </div>
+              
           </div>
+          
 
-
+          
         <!-- referencia -->
         <div class="mb-3 row">
           <label class="col-sm-3 col-form-label">Referencia</label><br>
@@ -36,6 +37,11 @@
           <div class="col-2">
             <button class="x" (click)="referencia=''">X</button>
           </div>
+      </div>
+
+      <!--boton eliminar cliente -->
+      <div class="col-2">
+        <button class="x botonCliente" (click)="vaciarcliente()">X</button>
       </div>
 
         <!-- usuario -->
@@ -69,36 +75,9 @@
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 
                 </mat-form-field>
-
-
-
-
-
-
-
-
-
-
-                 <!-- <mat-form-field>
-                    <mat-label>Introduce la fecha</mat-label>
-
-                    <mat-date-range-input>
-                      <input matStartDate placeholder="Start date">
-                      <input matEndDate placeholder="End date">
-                  </mat-date-range-input>
-
-
-
-                    <mat-date-range-input [rangePicker]="picker" class="inputFecha">
-                      <input matStartDate  [(ngModel)]="fechaInicio"  name="fechaInicio" placeholder="Fecha de inicio">
-                      <input matEndDate  [(ngModel)]="fechaFin"  name="fechaFin" placeholder="Fecha de fin">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                  </mat-form-field>-->
                 </div>
                 <div class="col-2">
-                  <button class="x btnfecha" (click)="fechaInicio==null && fechaFin == null">X</button>
+                  <button class="x btnfecha" (click)="fechaFin=''" (click)="fechaInicio=''">X</button>
                 </div>
             </div>
 
@@ -112,7 +91,7 @@
                       </select>
                   </div>
                   <div class="col-2">
-                    <button class="x btnTipos"  (click)="tipos=[]">X</button>
+                    <button class="x btnTipos"  (click)="tipoSeleccionado='TODOS'">X</button>
                   </div>
               </div> 
 
@@ -145,10 +124,12 @@
 
 
 
+
+
 <!--CONTENEDOR DE LA TABLA-->
-<div class="card col-9 col-md-8 tabla" >
+<div class="card col-9 col-md-8 tabla" *ngIf="recarga">
     <p-table [value]="pedidos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        currentPageReportTemplate="Página {first} de {last} de {totalRecords} entradas" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
                 <th >PRODUCTO</th>

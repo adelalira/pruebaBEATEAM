@@ -34,6 +34,21 @@
     margin:auto;
 }
 
+/*BOTON CLIENTE*/
+.botonCliente{
+    position:absolute;
+    top: 7.8%;
+    left: 18.4%;
+}
+
+/*IPAD*/
+@media screen and (min-width: 1079px) and (max-width: 1500px) {
+    .botonCliente{
+        position:absolute;
+        top: 11.6%;
+        left: 21.9%;
+    }
+  }
 
 /*BADGE*/
 .badge{

@@ -37,6 +37,7 @@ export class AppComponent implements OnInit{
   estados!: Estado[];
   token!:string;
   
+  recarga:boolean=true;
 
   first = 0;
   rows = 10;
@@ -44,8 +45,8 @@ export class AppComponent implements OnInit{
   cliente: string = "";
   referencia: string = "";
   usuario:string = "";
-  fechaInicio!:Date;
-  fechaFin!:Date;
+  fechaInicio!:string;
+  fechaFin!:string;
   tipoSeleccionado!:string;
   tiposSeleccionado:string[]=[];
   checkboxSeleccionados : string[]=[];
@@ -120,10 +121,7 @@ recogerEstados(){
 }
 
 seleccionarTiposIndividualmente(){
-  if(this.tipoSeleccionado=="TODOS"){
-    this.tiposSeleccionado = ["Mesa","Ruta","Urgente"]
-  }
-  else if (this.tipoSeleccionado =="Mesa" || this.tipoSeleccionado =="Urgente" || this.tipoSeleccionado =="Ruta") {
+if (this.tipoSeleccionado =="Mesa" || this.tipoSeleccionado =="Urgente" || this.tipoSeleccionado =="Ruta") {
     this.tiposSeleccionado.push(this.tipoSeleccionado);
   }
 }
@@ -146,14 +144,25 @@ seleccionarEstados(estado:Estado){
  }
 }
 
+vaciarcliente(){
+  this.cliente='';
+}
+
+
 /**
  * Busca los pedidos con los parametros introducidos en el formulario.
  */
 buscar(){
-  this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, this.fechaInicio, this.fechaFin, this.tiposSeleccionado, this.checkboxSeleccionados)
+  console.log("cliente " + this.cliente)
+  console.log("usuario" + this.usuario)
+  this.recarga=false;
+  let fechaInicioDate = new Date(this.fechaInicio);
+  let fechaFinDate = new Date(this.fechaFin);
+  this.servicio.buscar(this.token, this.cliente, this.usuario, this.referencia, fechaInicioDate , fechaFinDate, this.tiposSeleccionado, this.checkboxSeleccionados)
    .subscribe({
      next: (resp => {
       this.pedidos=resp.data;
+      this.recarga=true;
     }),
      error: resp => {
        Swal.fire({
